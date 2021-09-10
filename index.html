@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon"
+            href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx4cLEQf8zV_qUlmQYP3Scw-8pUtZKdCVLdJnJckXL0DbZLF4pkpTY4KNv-l_7pibdeVw&usqp=CAU"
+            type="image/x-icon">
+        <title>Translator App</title>
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand" onclick="window.location.reload()">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx4cLEQf8zV_qUlmQYP3Scw-8pUtZKdCVLdJnJckXL0DbZLF4pkpTY4KNv-l_7pibdeVw&usqp=CAU"
+                        alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    Language Translate App
+                </span>
+            </div>
+        </nav>
+
+        <!-- body -->
+        <div class="container mt-3">
+            <form>
+                <div class="row">
+                    <div class="col-lg-5 col-md-fluid col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Language (From):
+                                <select name="inputLanguage" id="inputLanguage" class="btn-primary">
+                                    <option value="en">English</option>
+                                    <option value="hi">Hindi</option>
+                                    <option value="ar">Arabic</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="id">Indonesian</option>
+                                    <option value="ga">Irish</option>
+                                    <option value="it">Italian</option>
+                                    <option value="ja">Japanese</option>
+                                    <option value="ko">Korean</option>
+                                    <option value="pl">Polish</option>
+                                    <option value="pt">Portuguese</option>
+                                    <option value="ru">Russian</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="tr">Turkish</option>
+                                    <option value="vi">Vietnamese</option>
+                                </select>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-floating">
+                                    <textarea class="form-control text_area" id="floatingTextarea2"
+                                        oninput="translateTexts()"></textarea>
+                                    <label for="floatingTextarea2">Text: </label>
+                                </div>
+                                <span class="popup" onmouseover="micPopup()">
+                                    <img src="https://freepngimg.com/download/microphone/70666-voice-microphone-google-search-logo-png-file-hd.png"
+                                        class="voiceLogo" alt="" onclick="recognition.start()">
+                                    <span class="popuptext" id="micPopup">Translate by voice</span>
+                                </span>
+                                <span class="popup" onmouseover="speakerPopup()">
+                                    <img src="https://chronotrack.com/wp-content/uploads/2016/11/Offline-Race-Promotion-ChronoTrack.png"
+                                        class="voiceLogo ms-3" alt="" onclick="inputSpeaker()">
+                                    <span class="popuptext" id="spkrPopup">Listen</span>
+                                </span>
+                                <span class="popup" onmouseover="copyPopup()" onclick="copyTexts()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        class="bi bi-clipboard voiceLogo ms-3" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path
+                                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg>
+                                    <span class="popuptext" id="cpyPopup">Copy texts</span>
+                                    <span class="popuptext" id="cpdPopup">Copied</span>
+                                </span>
+                                <span class="popup" onmouseover="ErasePopup()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        class="bi bi-eraser-fill voiceLogo ms-3" viewBox="0 0 16 16"
+                                        onclick="removeTxt()">
+                                        <path
+                                            d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z" />
+                                    </svg>
+                                    <span class="popuptext" id="rmvPopup">Remove text</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="voiceLogo mx-3 my-3" onclick="toggleAll()"><svg xmlns="http://www.w3.org/2000/svg"
+                            class="voiceLogo" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16"
+                            id="toggleBtn">
+                            <path fill-rule="evenodd"
+                                d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                        </svg></span>
+                    <div class="col-lg-5 col-md-fluid col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Language (To):
+                                <select name="outputLanguage" id="outputLanguage" class="btn-success"
+                                    onclick="translateTexts()">
+                                    <option value="hi">Hindi</option>
+                                    <option value="en">English</option>
+                                    <option value="ar">Arabic</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="id">Indonesian</option>
+                                    <option value="ga">Irish</option>
+                                    <option value="it">Italian</option>
+                                    <option value="ja">Japanese</option>
+                                    <option value="ko">Korean</option>
+                                    <option value="pl">Polish</option>
+                                    <option value="pt">Portuguese</option>
+                                    <option value="ru">Russian</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="tr">Turkish</option>
+                                    <option value="vi">Vietnamese</option>
+                                </select>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-floating">
+                                    <div class="form-control text_area" id="TranslatedTexts"></div>
+                                    <label for="TranslatedTexts">Result: </label>
+                                </div>
+                                <span class="popup" onmouseover="speakerPopupTr()">
+                                    <img src="https://chronotrack.com/wp-content/uploads/2016/11/Offline-Race-Promotion-ChronoTrack.png"
+                                        class="voiceLogo ms-3" alt="" onclick="outputSpeaker()">
+                                    <span class="popuptext" id="spkr2Popup">Listen</span>
+                                </span>
+                                <span class="popup" onmouseover="copyPopupTr()" onclick="copyTextsTr()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        class="bi bi-clipboard voiceLogo ms-3" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path
+                                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg>
+                                    <span class="popuptext" id="cpyPopupTr">Copy texts</span>
+                                    <span class="popuptext" id="cpdPopupTr">Copied</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>
+<script src="script.js"></script>
